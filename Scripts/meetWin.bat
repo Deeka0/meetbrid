@@ -1,0 +1,5 @@
+
+cd ..
+python run.py
+
+
