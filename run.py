@@ -15,7 +15,8 @@ if platform == "darwin":
         echo ${x}
         osascript -e 'tell application "Terminal" to activate' \
         -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down' \
-        -e 'tell application "Terminal" to do script "python3 {y}meet.py" in selected tab of the front windosleep 2
+        -e 'tell application "Terminal" to do script "python3 {y}meet.py" in selected tab of the front window'
+        sleep 2
 
     done'''.format(x = r"{BASH_VERSION}", y = path)
 
@@ -71,7 +72,8 @@ def details():
         detailsDict = csv.DictReader(detailsFile, delimiter=',')
         for row in detailsDict:
             detailsDict = row
-        return detailsDict
+        # print(detailsDict)
+        return detailsDict["meetingID"]
     else:
         print("\nInvalid details file")
         sleep(1)
@@ -81,9 +83,9 @@ def details():
 
 def get_link():
     clear(command=clear_arg)
-    url = input("Paste in your meeting link: ").strip()
-    if url.startswith("https://meet.google.com/"):
-        return url
+    link = input("Paste in your meeting link: ").strip()
+    if link.startswith("https://meet.google.com/"):
+        return link
     else:
         print("Invalid meeting link")
         sleep(1)
@@ -99,15 +101,17 @@ def times():
 
 try:
     name = names()
-    # detail = details()
+    url = details()
 except:
-    print("Invalid files path")
-    exit("Correct the file paths then run program again")
+    exit("Invalid files path")
 
 
+# url = get_link()
+
+url = (url, "test")
+url = url[0]
 if __name__ == "__main__":
     clean_up()
-    link = get_link()
     clear(command=clear_arg)
     times()
     
