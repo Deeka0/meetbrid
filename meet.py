@@ -1,20 +1,15 @@
 from __init__ import *
 from run import name, url
 
-from selenium import webdriver
-from selenium.webdriver.edge.options import Options
-from selenium.webdriver.edge.service import Service
+import undetected_chromedriver as uc
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException, ElementNotInteractableException, TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.common.by import By
 from random import randint
 
-
-
-"https://meet.google.com/etf-abah-ximyyy"
-'https://meet.google.com/zyf-yqur-oam'
-"51.159.24.172"
 
 runs = 0
 
@@ -23,17 +18,12 @@ def join():
     options = Options()
     options.add_argument("--incognito")
     # options.add_argument("--headless")
-
-    options.add_argument("--disable-blink-features=AutomationControlled") 
-    options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
-    options.add_experimental_option("useAutomationExtension", False)
-
+    options.add_argument('--blink-settings=imagesEnabled=false')
     options.page_load_strategy = 'eager'
-    service = Service(executable_path="/Users/dark/Downloads/geckodriver")
-    driver = webdriver.Edge(options=options, service=service)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    service = Service(executable_path="/Users/dark/Downloads/chromedriver")
+    driver = uc.Chrome(options=options, service=service)
     wait = WebDriverWait(driver, timeout=30)
-
+    
     driver.get(url)
     sleep(15)
 
@@ -174,6 +164,7 @@ def join():
         return join()
 
 
+clear(command=clear_arg)
 join()
 
 
