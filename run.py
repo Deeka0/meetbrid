@@ -1,4 +1,5 @@
 from __init__ import *
+from random import randint
 import csv
 
 
@@ -19,7 +20,6 @@ if platform == "darwin":
         sleep 2
 
     done'''.format(x = r"{BASH_VERSION}", y = path)
-
 
 elif platform == "win32" or platform == "win64":
     path = runtime_path + "\\"
@@ -48,48 +48,25 @@ else:
     exit("Not available yet.")
 
 
-
 def names():
     names_file = path + "names.csv"
-    if names_file: # if names_file.endswith("names.csv"):
-        nameFile = open(names_file, "r")
-        nameDict = csv.DictReader(nameFile, delimiter=',')
+    if names_file:
         nameList = []
-        for row in nameDict:
-            nameList.append(row)
-        return(nameList)
-    else:
-        print("\nInvalid names file")
-        sleep(1)
-        clear(command=clear_arg)
-        return names()
+        with open(names_file, "r") as nameFile:
+            names_object = csv.reader(nameFile)
+            for row in names_object:
+                nameList.append(row)
+        return "".join(nameList[randint(0, len(nameList))]).title()
 
 
 def details():
     details_file = path + "details.csv"
-    if details_file.endswith("details.csv"):
-        detailsFile = open(details_file, "r")
-        detailsDict = csv.DictReader(detailsFile, delimiter=',')
-        for row in detailsDict:
-            detailsDict = row
-        # print(detailsDict)
-        return detailsDict["meetingID"]
-    else:
-        print("\nInvalid details file")
-        sleep(1)
-        clear(command=clear_arg)
-        return details()
-
-
-def get_link():
-    clear(command=clear_arg)
-    link = input("Paste in your meeting link: ").strip()
-    if link.startswith("https://meet.google.com/"):
-        return link
-    else:
-        print("Invalid meeting link")
-        sleep(1)
-        return get_link()
+    if details_file:
+        with open(details_file, "r") as detailsFile:
+            details_object = csv.DictReader(detailsFile, delimiter=',')
+            for row in details_object:
+                details_object = row
+        return details_object["meetingLink"]
 
 
 def times():
@@ -106,10 +83,7 @@ except:
     exit("Invalid files path")
 
 
-# url = get_link()
 
-url = (url, "test")
-url = url[0]
 if __name__ == "__main__":
     clean_up()
     clear(command=clear_arg)
