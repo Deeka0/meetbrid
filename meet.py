@@ -8,10 +8,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException, ElementNotInteractableException, TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.common.by import By
-from random import randint
 
 
 runs = 0
+
 
 def join():
 
@@ -35,8 +35,7 @@ def join():
     def starter():
         try:
             text_box = driver.find_element(By.CSS_SELECTOR, "#c13")
-            chosen_name = str(name[randint(0, len(name))]['names']).capitalize()
-            text_box.send_keys(chosen_name)
+            text_box.send_keys(name)
 
             first_join_button = driver.find_element(By.CSS_SELECTOR, "body > c-wiz > div > div > div:nth-child(14) > div.crqnQb > div > div.gAGjv > div.vgJExf > div > div > div.d7iDfe.NONs6c > div.shTJQe > div.jtn8y > div.XCoPyb > div:nth-child(1) > button > span")
             wait.until(EC.element_to_be_clickable(first_join_button)).click()
